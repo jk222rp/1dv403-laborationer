@@ -7,10 +7,33 @@ window.onload = function(){
 		// Plats för förändring.		
 		// Returnera den konverterade strängen.
 		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
-	
-
-
-
+		
+		//Kastar undantag om användaren ej skrivit in någon text
+		if (str === "") {
+			throw new Error("Ingen text är inmatad");
+		}
+		
+		//En sträng som kan byggas på
+		var newStr = "";
+		
+		//Returnar olika tecken beroende på vad tecknet som skickats till funktionen är
+		function transform (char){
+			if (char == "a" || char == "A") {
+				return "#";
+			} else if (char == char.toLowerCase()) {
+				return char.toUpperCase();
+			} else if (char == char.toUpperCase()) {
+				return char.toLowerCase();
+			}
+		}
+		
+		//Bygger på strängen newStr med ändringarna genom att
+		//anropa funktionen transform för varje tecken i inmatningen
+		for (var i = 0; i < str.length; i++) {
+			newStr = newStr + transform(str.charAt(i));
+		}
+		
+		return newStr;
 
 
 
