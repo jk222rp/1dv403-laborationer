@@ -12,7 +12,25 @@ window.onload = function(){
 			
 		// Plats för förändring.
 		
-		if (number == secret) {
+	// För stjärnuppgift
+		return (number == secret) ? (
+		count += 1,
+		[true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + count + " gissningar för att hitta det."])
+		: (number < 0 || number > 100) ?
+		[false, "Talet är utanför intervallet 0 - 100. Gissa igen!"]
+		: (number < secret) ? (
+		count += 1,
+		[false, "Det hemliga talet är högre. Gissa igen!"])
+		: (number > secret) ? (
+		count += 1,
+		[false, "Det hemliga talet är lägre. Gissa igen!"])
+		: (isNaN(number)) ?
+		[false, "Du matade inte in ett tal i rätt format. Gissa igen!"]
+		: [false, "Något gick väldigt fel!"]
+		;
+		
+	// Med if-sats
+		/*if (number == secret) {
 			count += 1;
 			return [true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + count + " gissningar för att hitta det."];
 		} else if (number < 0 || number > 100) {
@@ -27,7 +45,7 @@ window.onload = function(){
 			return [false, "Du matade inte in ett tal i rätt format. Gissa igen!"];
 		} else {
 			throw new Error("Något gick väldigt fel!");
-		}
+		}*/
 
 
 		// Returnera exempelvis: 
