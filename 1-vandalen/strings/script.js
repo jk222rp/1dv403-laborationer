@@ -13,10 +13,18 @@ window.onload = function(){
 			throw new Error("Ingen text är inmatad");
 		}
 		
-		//En sträng som kan byggas på
+		if (str !== str.toString()) {
+			throw new Error("Något gick fel! Inmatningen tolkas inte som en sträng.");
+		}
+		
+		// En sträng som kan byggas på
 		var newStr = "";
 		
-		//Returnar olika tecken beroende på vad tecknet som skickats till funktionen är
+		// För stjärnuppgiften
+		// En array med varje tecken från den inskickade strängen
+		var strArr = str.split("");
+		
+		// Returnar olika tecken beroende på vad tecknet som skickats till funktionen är
 		function transform (char){
 			if (char == "a" || char == "A") {
 				return "#";
@@ -27,11 +35,23 @@ window.onload = function(){
 			}
 		}
 		
-		//Bygger på strängen newStr med ändringarna genom att
-		//anropa funktionen transform för varje tecken i inmatningen
-		for (var i = 0; i < str.length; i++) {
-			newStr = newStr + transform(str.charAt(i));
-		}
+		/*function transform (char){
+			var change1 = char.replace(/[a-zåäö]/, char.toUpperCase());
+			var change2 = change1.replace(/[A-ZÅÄÖ]/, change1.toLowerCase());
+			var change3 = change2.replace(/[Aa]/, "#");
+			return change3;
+		}*/
+		
+		// Bygger på strängen newStr med ändringarna genom att
+		// anropa funktionen transform för varje tecken i inmatningen
+		/*for (var i = 0; i < str.length; i++) {
+			newStr += transform(str.charAt(i));
+		}*/
+		
+		// För stjärnuppgiften
+		strArr.forEach(function (char){
+			newStr += transform(char);
+		});
 		
 		return newStr;
 

@@ -8,8 +8,29 @@ window.onload = function(){
 
 
 			// Din kod här.
-
-
+		if (date.length != 10 || date.charAt(4) != "-" || date.charAt(7) != "-") {
+			throw new Error("Datumet är inte i rätt format!");
+		}
+		
+		var bdDate = new Date(date);
+		
+		var now = new Date();
+		
+		var currentYear = Math.floor(1970+(now.getTime()/1000/60/60/24/365));
+		
+		bdDate.setFullYear(currentYear);
+		
+		bdDate.setHours(0); //För att få tiden exakt då dagen börjar
+		
+		var daysToBd = Math.ceil((bdDate.getTime() - now.getTime())/1000/60/60/24);
+		
+		//Kollar om användaren redan fyllt år (om dagarna till födelsedagen är ett negativt tal)
+		if (daysToBd >= 0) {
+			return daysToBd;
+		} else {
+			throw new Error("Du har redan fyllt år!");
+		}
+		
 
 
 	};
