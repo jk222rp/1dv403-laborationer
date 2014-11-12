@@ -8,47 +8,35 @@ window.onload = function(){
 		// Returnera den konverterade strängen.
 		// Vid fel, kasta ett undantag med ett meddelande till användaren. 
 		
-		//Kastar undantag om användaren ej skrivit in någon text
+		// Felhantering
 		if (str === "") {
 			throw new Error("Ingen text är inmatad");
 		}
-		
 		if (str !== str.toString()) {
 			throw new Error("Något gick fel! Inmatningen tolkas inte som en sträng.");
 		}
 		
-		// En sträng som kan byggas på
+		// Skapar en sträng som kan byggas på
 		var newStr = "";
 		
-		// För stjärnuppgiften
 		// En array med varje tecken från den inskickade strängen
 		var strArr = str.split("");
 		
-		// Returnar olika tecken beroende på vad tecknet som skickats till funktionen är
+		// Returnerar olika tecken beroende på vad tecknet som skickats till funktionen är
 		function transform (char){
-			if (char == "a" || char == "A") {
-				return "#";
-			} else if (char == char.toLowerCase()) {
-				return char.toUpperCase();
-			} else if (char == char.toUpperCase()) {
-				return char.toLowerCase();
-			}
+			return (char == "a" || char == "A") ?
+				"#"
+			: (char == char.toLowerCase()) ?
+				char.toUpperCase()
+			: (char == char.toUpperCase()) ?
+				char.toLowerCase()
+			: 
+				char
+			;
 		}
-		
-		/*function transform (char){
-			var change1 = char.replace(/[a-zåäö]/, char.toUpperCase());
-			var change2 = change1.replace(/[A-ZÅÄÖ]/, change1.toLowerCase());
-			var change3 = change2.replace(/[Aa]/, "#");
-			return change3;
-		}*/
 		
 		// Bygger på strängen newStr med ändringarna genom att
 		// anropa funktionen transform för varje tecken i inmatningen
-		/*for (var i = 0; i < str.length; i++) {
-			newStr += transform(str.charAt(i));
-		}*/
-		
-		// För stjärnuppgiften
 		strArr.forEach(function (char){
 			newStr += transform(char);
 		});

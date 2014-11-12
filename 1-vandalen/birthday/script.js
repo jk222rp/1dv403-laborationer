@@ -25,13 +25,11 @@ window.onload = function(){
 		var daysToBd = Math.ceil((bdDate.getTime() - now.getTime())/1000/60/60/24);
 		
 		//Kollar om användaren redan fyllt år (om dagarna till födelsedagen är ett negativt tal)
-		if (daysToBd >= 0) {
-			return daysToBd;
-		} else {
+		if (daysToBd < 0) {
 			throw new Error("Du har redan fyllt år!");
 		}
 		
-
+		return daysToBd;
 
 	};
 	// ------------------------------------------------------------------------------
