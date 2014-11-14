@@ -19,26 +19,23 @@ window.onload = function(){
 		// Skapar en sträng som kan byggas på
 		var newStr = "";
 		
-		// En array med varje tecken från den inskickade strängen
-		var strArr = str.split("");
-		
-		// Bygger på strängen newStr med ändringarna
-		strArr.forEach(function (char){
-			newStr += (char == "a" || char == "A") ?
-				"#"
-			: (char == char.toLowerCase()) ?
-				char.toUpperCase()
-			: (char == char.toUpperCase()) ?
-				char.toLowerCase()
-			: 
-				char
-			;
-		});
+		//Loopar igenom den inmatade strängen och bygger på den nya strängen med ändringarna
+		for (var i = 0; i < str.length; i++) {
+			if (str.charAt(i) == "a" || str.charAt(i) == "A") {
+				newStr += "#";
+				
+			} else if (str.charAt(i) == str.charAt(i).toLowerCase()) {
+				newStr += str.charAt(i).toUpperCase();
+				
+			} else if (str.charAt(i) == str.charAt(i).toUpperCase()) {
+				newStr += str.charAt(i).toLowerCase();
+				
+			} else {
+				newStr += str.charAt(i);
+			}
+		}
 		
 		return newStr;
-
-
-
 	};
 	// ------------------------------------------------------------------------------
 

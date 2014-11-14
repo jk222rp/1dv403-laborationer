@@ -11,23 +11,27 @@ window.onload = function(){
 		console.log("Du gissade: " + number); // Detta nummer är det som användaren gissade på.
 			
 		// Plats för förändring.
-		
-		return (number == secret) ? (
-			count += 1,
-			[true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + count + " gissningar för att hitta det."])
-		: (number < 0 || number > 100) ?
-			[false, "Talet är utanför intervallet 0 - 100. Gissa igen!"]
-		: (number < secret) ? (
-			count += 1,
-			[false, "Det hemliga talet är högre. Gissa igen!"])
-		: (number > secret) ? (
-			count += 1,
-			[false, "Det hemliga talet är lägre. Gissa igen!"])
-		: (isNaN(number)) ?
-			[false, "Du matade inte in ett tal i rätt format. Gissa igen!"]
-		:
-			[false, "Något gick väldigt fel!"]
-		;
+		if (number == secret) {
+			count += 1;
+			return [true, "Grattis du vann! Det hemliga talet var " + secret + " och du behövde " + count + " gissningar för att hitta det."];
+			
+		} else if (number < 0 || number > 100) {
+			return [false, "Talet är utanför intervallet 0 - 100. Gissa igen!"];
+			
+		} else if (number < secret) {
+			count += 1;
+			return [false, "Det hemliga talet är högre. Gissa igen!"];
+			
+		} else if (number > secret) {
+			count += 1;
+			return [false, "Det hemliga talet är lägre. Gissa igen!"];
+			
+		} else if (isNaN(number)) {
+			return [false, "Du matade inte in ett tal i rätt format. Gissa igen!"];
+			
+		} else {
+			return [false, "Något gick väldigt fel!"];
+		}
 
 
 		// Returnera exempelvis: 

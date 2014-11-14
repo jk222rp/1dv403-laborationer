@@ -5,29 +5,30 @@ window.onload = function(){
 	
 	var birthday = function(date){
 		
-
-
-			// Din kod här.
+		//Kontrollerar att det inmatade datumet är inskrivet i formatet ÅÅÅÅ-MM-DD
 		if (date.length != 10 || date.charAt(4) != "-" || date.charAt(7) != "-") {
 			throw new Error("Datumet är inte i rätt format!");
 		}
 		
-		var bdDate = new Date(date);
+		//Variabler
+		var bdDate = new Date(date); //Sätter födelsedagen till födelsedatumet
+		var now = new Date(); //Skapar en variabel med dagens datum
 		
-		var now = new Date();
-		
-		var currentYear = Math.floor(1970+(now.getTime()/1000/60/60/24/365));
-		
-		bdDate.setFullYear(currentYear);
-		
-		bdDate.setHours(0); //För att få tiden exakt då dagen börjar
-		
-		var daysToBd = Math.ceil((bdDate.getTime() - now.getTime())/1000/60/60/24);
+		//Ändrar födelsedagens år till i år
+		bdDate.setFullYear(now.getFullYear());
 		
 		//Kollar om användaren redan fyllt år (om dagarna till födelsedagen är ett negativt tal)
-		if (daysToBd < 0) {
-			throw new Error("Du har redan fyllt år!");
+		if (bdDate.getTime() < now.getTime()) {
+			bdDate.setFullYear(now.getFullYear() + 1);
 		}
+		
+		//Ändrar födelsedagens timme till exakt då dagen börjar
+		bdDate.setHours(0);
+		
+		//Räknar ut antalet dagar till födelsedagen
+		//genom att räkna skillnaden i millisekunder mellan nu och födelsedagen
+		//samt dividera skillnaden så den blir i dagar
+		var daysToBd = Math.ceil((bdDate.getTime() - now.getTime())/1000/60/60/24);
 		
 		return daysToBd;
 
