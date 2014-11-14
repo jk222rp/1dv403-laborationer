@@ -22,9 +22,9 @@ window.onload = function(){
 		// En array med varje tecken från den inskickade strängen
 		var strArr = str.split("");
 		
-		// Returnerar olika tecken beroende på vad tecknet som skickats till funktionen är
-		function transform (char){
-			return (char == "a" || char == "A") ?
+		// Bygger på strängen newStr med ändringarna
+		strArr.forEach(function (char){
+			newStr += (char == "a" || char == "A") ?
 				"#"
 			: (char == char.toLowerCase()) ?
 				char.toUpperCase()
@@ -33,12 +33,6 @@ window.onload = function(){
 			: 
 				char
 			;
-		}
-		
-		// Bygger på strängen newStr med ändringarna genom att
-		// anropa funktionen transform för varje tecken i inmatningen
-		strArr.forEach(function (char){
-			newStr += transform(char);
 		});
 		
 		return newStr;
