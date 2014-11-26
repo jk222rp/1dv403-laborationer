@@ -19,6 +19,10 @@ function Message(message, date){
     };
 }
 
+Message.prototype.getDateText = function() {
+    return this.getDate().toLocaleTimeString();
+};
+
 Message.prototype.getHTMLText = function() {
     return this.getMessage().replace(/\n/g, "<br />");
 };
