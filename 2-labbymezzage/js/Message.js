@@ -20,7 +20,7 @@ function Message(message, date){
 }
 
 Message.prototype.getHTMLText = function() {
-    return this.getMessage().replace("\n", "<br />");
+    return this.getMessage().replace(/\n/g, "<br />");
 };
 
 Message.prototype.toString = function() {
