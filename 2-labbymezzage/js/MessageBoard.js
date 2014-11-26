@@ -1,6 +1,9 @@
 "use strict"
 
 var MessageBoard = {
+    
+    messages:[],
+    
     init:function() {
         
     }
