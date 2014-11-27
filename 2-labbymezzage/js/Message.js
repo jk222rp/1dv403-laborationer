@@ -19,8 +19,23 @@ function Message(message, date){
     };
 }
 
-Message.prototype.getDateText = function() {
+Message.prototype.getTimeText = function() {
     return this.getDate().toLocaleTimeString();
+};
+
+Message.prototype.getDateText = function() {
+    var dayNr = this.getDate().getDate();
+    var monthNr = this.getDate().getMonth();
+    var year = this.getDate().getFullYear();
+    
+    // Sets names to months
+    var months = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"];
+    
+    var month = months[monthNr];
+    
+    var fullDate = dayNr + " " + month + " " + year;
+    
+    return fullDate;
 };
 
 Message.prototype.getHTMLText = function() {

@@ -26,20 +26,30 @@ var MessageBoard = {
     },
         
     renderMessage: function(messageID) {
-        var date = document.createElement("p");
-        var remove = document.createElement("a");
+        var date = document.createElement("a");
         var div = document.createElement("div");
+        var remove = document.createElement("a");
         var text = document.createElement("p");
         var theMessages = document.getElementById("theMessages");
+        var time = document.createElement("p");
         
         // Gets the text
         text.innerHTML = MessageBoard.messages[messageID].getHTMLText();
         div.appendChild(text);
         
+        // Gets the date button
+        date.setAttribute("href", "#");
+        date.setAttribute("title", "Visa tidsstämpel");
+        date.innerHTML = "<img src='js/pics/time.png' alt='Visa tidsstämpel'>";
+        date.onclick = function() {
+            alert("Inlägget skapades den " + MessageBoard.messages[messageID].getDateText() + " klockan " + MessageBoard.messages[messageID].getTimeText());
+        };
+        div.appendChild(date);
+        
         // Gets the delete button
         remove.setAttribute("href", "#");
-        remove.setAttribute("title", "Remove message");
-        remove.innerHTML = "<img src='js/pics/Removebutton.png' alt='Remove message'>";
+        remove.setAttribute("title", "Ta bort meddelande");
+        remove.innerHTML = "<img src='js/pics/removebutton.png' alt='Ta bort meddelande'>";
         remove.onclick = function() {
             MessageBoard.removeMessage(messageID);
             MessageBoard.renderMessages();
@@ -47,8 +57,8 @@ var MessageBoard = {
         div.appendChild(remove);
         
         // Gets the date
-        date.innerHTML = MessageBoard.messages[messageID].getDateText();
-        div.appendChild(date);
+        time.innerHTML = MessageBoard.messages[messageID].getTimeText();
+        div.appendChild(time);
         
         // Renders the message
         theMessages.appendChild(div);
