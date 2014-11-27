@@ -4,8 +4,11 @@ var MessageBoard = {
     
     messages: [],
     
+    removeMessage: function(messageID) {
+            MessageBoard.messages.splice(messageID, 1);
+    },
+    
     renderMessages: function() {
-        var count = 0;
         var theMessages = document.getElementById("theMessages");
         
         // Remove all messages
@@ -14,17 +17,17 @@ var MessageBoard = {
         // Renders all messages
         for (var i = 0; i < MessageBoard.messages.length; i++) {
             MessageBoard.renderMessage(i);
-            count = i;
         }
         
         // Adds message counter
         var numberOfMessages = document.createElement("p");
-        numberOfMessages.innerHTML = "Antal meddelanden: " + (count + 1);
+        numberOfMessages.innerHTML = "Antal meddelanden: " + (MessageBoard.messages.length);
         theMessages.appendChild(numberOfMessages);
     },
         
     renderMessage: function(messageID) {
         var date = document.createElement("p");
+        var remove = document.createElement("a");
         var div = document.createElement("div");
         var text = document.createElement("p");
         var theMessages = document.getElementById("theMessages");
@@ -33,7 +36,17 @@ var MessageBoard = {
         text.innerHTML = MessageBoard.messages[messageID].getHTMLText();
         div.appendChild(text);
         
-        // Get the date
+        // Gets the delete button
+        remove.setAttribute("href", "#");
+        remove.setAttribute("title", "Remove message");
+        remove.innerHTML = "<img src='js/pics/Removebutton.png' alt='Remove message'>";
+        remove.onclick = function() {
+            MessageBoard.removeMessage(messageID);
+            MessageBoard.renderMessages();
+        };
+        div.appendChild(remove);
+        
+        // Gets the date
         date.innerHTML = MessageBoard.messages[messageID].getDateText();
         div.appendChild(date);
         
