@@ -5,7 +5,10 @@ var MessageBoard = {
     messages: [],
     
     removeMessage: function(messageID) {
+        if (confirm("Vill du ta bort meddelandet?")) {
             MessageBoard.messages.splice(messageID, 1);
+            MessageBoard.renderMessages();
+        }
     },
     
     renderMessages: function() {
@@ -52,7 +55,6 @@ var MessageBoard = {
         remove.innerHTML = "<img src='js/pics/removebutton.png' alt='Ta bort meddelande'>";
         remove.onclick = function() {
             MessageBoard.removeMessage(messageID);
-            MessageBoard.renderMessages();
         };
         div.appendChild(remove);
         
@@ -70,7 +72,21 @@ var MessageBoard = {
         
         button.onclick = function(){
             MessageBoard.messages.push(new Message(message.value, new Date()));
+            message.value = "";
             MessageBoard.renderMessages();
+        };
+        
+        message.onkeypress = function(e) {
+            if(!e) {
+                var e = window.event;
+            }
+            
+            if (e.keyCode == 13 && !e.shiftKey) {
+                MessageBoard.messages.push(new Message(message.value, new Date()));
+                message.value = "";
+                MessageBoard.renderMessages();
+                return false;
+            }
         };
     }
     

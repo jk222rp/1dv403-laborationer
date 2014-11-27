@@ -39,7 +39,7 @@ Message.prototype.getDateText = function() {
 };
 
 Message.prototype.getHTMLText = function() {
-    return this.getMessage().replace(/\n/g, "<br />");
+    return this.getMessage().replace(/[\n\r]/g, "<br />");
 };
 
 Message.prototype.toString = function() {
