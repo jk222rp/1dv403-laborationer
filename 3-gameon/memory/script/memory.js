@@ -76,11 +76,11 @@ var Memory = {
         function turnCard(cardNr, img) {
             return function() {
             // checks that 2 cards are not turned and that the card aren't already turned
-                if (countTurnedCards < 1 && img.src[img.src.length - 5] === "0") {
+                if (countTurnedCards < 1 && img.src[img.src.length - 5] === "0" && img.src[img.src.length - 6] === "/") {
                     img.src = "pics/" + Memory.randoms[cardNr] + ".png";
                     cards[0] = document.getElementById("card" + cardNr);
                     ++countTurnedCards;
-                } else if (countTurnedCards < 2 && img.src[img.src.length - 5] === "0") {
+                } else if (countTurnedCards < 2 && img.src[img.src.length - 5] === "0" && img.src[img.src.length - 6] === "/") {
                     img.src = "pics/" + Memory.randoms[cardNr] + ".png";
                     cards[1] = document.getElementById("card" + cardNr);
                     ++countTurnedCards;
