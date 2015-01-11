@@ -1,5 +1,7 @@
 "use strict";
 
+var qNr = 0;
+
 var Quiz = {
     
     init: function() {
@@ -26,6 +28,25 @@ var Quiz = {
         xhr.send(null);
     },
     
+    getQuestion: function(nextURL) {
+        var question = {};
+        var xhr = new XMLHttpRequest();
+        
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                question = JSON.parse(xhr.responseText);
+                console.log(question);
+                
+            // Publicerar frågan på webbsidan
+                Quiz.publishQuestion(question);
+            }
+        };
+        
+        xhr.open("GET", nextURL, true);
+        
+        xhr.send(null);
+    },
+    
 // Publicerar frågan på webbsidan
     publishQuestion: function(question) {
         var content = document.getElementById("content");
@@ -35,8 +56,11 @@ var Quiz = {
         var input = document.createElement("input");
         var button = document.createElement("button");
         
+    // Rensar contenten på eventuella tidigare frågor
+        content.innerHTML = "";
+        
     // Anger vilket nummer det är på frågan
-        header.innerHTML = "Fråga " + question.id;
+        header.innerHTML = "Fråga " + (++qNr);
         content.appendChild(header);
         
     // Skriver ut frågan
@@ -58,15 +82,46 @@ var Quiz = {
         button.innerHTML = "OK";
         button.onclick = function() {
         // Skickar svaret från användaren till API:et
-            Quiz.sendAnswer(input.value);
+            Quiz.sendAnswer(question, input.value);
         };
         content.appendChild(button);
         
     },
     
 // Skickar svaret till API:et
-    sendAnswer: function() {
+    sendAnswer: function(question, answer) {
+        var xhr = new XMLHttpRequest();
         
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                if(xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var message = JSON.parse(xhr.responseText);
+                    console.log(message);
+                    
+                // Publicerar nästa fråga på webbsidan
+                // ...om det finns en till fråga
+                    if (message.nextURL) {
+                        Quiz.getQuestion(message.nextURL);
+                    } else {
+                        console.log("SLUT!");
+                    }
+                    
+                } else {
+                    console.log("fel svar");
+                }
+            }
+        };
+        
+        xhr.open("POST", question.nextURL, true);
+        
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        
+        var ans = {
+            "answer": answer
+        };
+        
+        xhr.send(JSON.stringify(ans));
     }
     
 };
