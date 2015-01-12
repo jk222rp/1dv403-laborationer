@@ -133,6 +133,13 @@ var Quiz = {
     },
     
     wrongAnswer: function() {
+        var content = document.getElementById("content");
+        var p = document.createElement("p");
+        
+        p.setAttribute("class", "wrongAnswer");
+        p.innerHTML = "Fel svar, försök igen.";
+        content.appendChild(p);
+        
         Quiz.result();
     },
     
