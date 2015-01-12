@@ -1,8 +1,9 @@
 "use strict";
 
-var qNr = 0;
-
 var Quiz = {
+
+    qNr : 0,
+    results : [],
     
     init: function() {
         Quiz.startQuiz();
@@ -16,7 +17,6 @@ var Quiz = {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 question = JSON.parse(xhr.responseText);
-                console.log(question);
                 
             // Publicerar frågan på webbsidan
                 Quiz.publishQuestion(question);
@@ -35,7 +35,6 @@ var Quiz = {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 question = JSON.parse(xhr.responseText);
-                console.log(question);
                 
             // Publicerar frågan på webbsidan
                 Quiz.publishQuestion(question);
@@ -60,7 +59,7 @@ var Quiz = {
         content.innerHTML = "";
         
     // Anger vilket nummer det är på frågan
-        header.innerHTML = "Fråga " + (++qNr);
+        header.innerHTML = "Fråga " + (++Quiz.qNr);
         content.appendChild(header);
         
     // Skriver ut frågan
@@ -95,20 +94,18 @@ var Quiz = {
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4) {
                 if(xhr.status === 200) {
-                    console.log(xhr.responseText);
                     var message = JSON.parse(xhr.responseText);
-                    console.log(message);
                     
                 // Publicerar nästa fråga på webbsidan
                 // ...om det finns en till fråga
                     if (message.nextURL) {
-                        Quiz.getQuestion(message.nextURL);
+                        Quiz.rightAnswer(message);
                     } else {
-                        console.log("SLUT!");
+                        Quiz.endOfQuiz();
                     }
                     
-                } else {
-                    console.log("fel svar");
+                } else if(xhr.status === 400) {
+                    Quiz.wrongAnswer();
                 }
             }
         };
@@ -122,6 +119,51 @@ var Quiz = {
         };
         
         xhr.send(JSON.stringify(ans));
+    },
+    
+    rightAnswer: function(message) {
+        Quiz.getQuestion(message.nextURL);
+        if (Quiz.results[Quiz.qNr] === undefined) {
+            Quiz.results[Quiz.qNr] = 0;
+        }
+    },
+    
+    wrongAnswer: function() {
+        Quiz.result();
+    },
+    
+// Sparar resultatet för varje fråga
+    result: function() {
+    // Sätter antal felsvar på den aktuella frågan till 1...
+    // ...om det inte tidigare registrerats ett felsvar på den aktuella frågan
+        if (Quiz.results[Quiz.qNr] === undefined) {
+            Quiz.results[Quiz.qNr] = 1;
+        } else {
+            ++Quiz.results[Quiz.qNr];
+        }
+    },
+    
+// Skriver ut resultatet och att quizen är slut
+    endOfQuiz: function() {
+        var content = document.getElementById("content");
+        var header = document.createElement("h2");
+        var p = document.createElement("p");
+        
+    // Rensar contenten på eventuella tidigare frågor
+        content.innerHTML = "";
+        
+    // Skriver att quizen är slut
+        header.innerHTML = "Quizen är slut!";
+        content.appendChild(header);
+        
+    // Skriver ut resultatet
+        for (var i = 1; i < Quiz.results.length; i++) {
+            
+            console.log(Quiz.results[i]);
+        }
+        
+        p.innerHTML = "Du behövde " + 5 + " försök för att klara quizen.";
+        content.appendChild(p);
     }
     
 };
