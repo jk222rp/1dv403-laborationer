@@ -76,6 +76,19 @@ var Quiz = {
         input.id = "answer";
         input.name = "answer";
         content.appendChild(input);
+        input.focus();
+        
+        input.onkeypress = function(e) {
+            if(!e) {
+                var e = window.event;
+            }
+            
+            if (e.keyCode == 13 && !e.shiftKey) {
+            // Skickar svaret från användaren till API:et
+                Quiz.sendAnswer(question, input.value);
+                return false;
+            }
+        };
         
     // Knappen för att skicka svaret
         button.innerHTML = "OK";
@@ -135,10 +148,13 @@ var Quiz = {
     wrongAnswer: function() {
         var content = document.getElementById("content");
         var p = document.createElement("p");
+        var input = document.getElementById("answer");
         
         p.setAttribute("class", "wrongAnswer");
         p.innerHTML = "Fel svar, försök igen.";
         content.appendChild(p);
+        
+        input.focus();
         
         Quiz.result();
     },
@@ -174,7 +190,7 @@ var Quiz = {
         for (var i = 1; i < Quiz.results.length; i++) {
             var p = document.createElement("p");
             p.setAttribute("class", "result");
-            p.innerHTML = "Fråga " + i + ": " + Quiz.results[i] + " fel.";
+            p.innerHTML = "Fråga " + i + ": Du klarade frågan på " + (Quiz.results[i]+1) + " försök.";
             content.appendChild(p);
         }
     }
