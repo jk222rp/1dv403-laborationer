@@ -101,6 +101,10 @@ var Quiz = {
                     if (message.nextURL) {
                         Quiz.rightAnswer(message);
                     } else {
+                    // Lägger till 0 fel, om inget fel gjorts, på sista frågan
+                        if (Quiz.results[Quiz.qNr] === undefined) {
+                            Quiz.results[Quiz.qNr] = 0;
+                        }
                         Quiz.endOfQuiz();
                     }
                     
@@ -147,6 +151,7 @@ var Quiz = {
     endOfQuiz: function() {
         var content = document.getElementById("content");
         var header = document.createElement("h2");
+        var header2 = document.createElement("h3");
         var p = document.createElement("p");
         
     // Rensar contenten på eventuella tidigare frågor
@@ -157,13 +162,13 @@ var Quiz = {
         content.appendChild(header);
         
     // Skriver ut resultatet
-        for (var i = 1; i < Quiz.results.length; i++) {
-            
-            console.log(Quiz.results[i]);
-        }
+        header2.innerHTML = "Resultat";
+        content.appendChild(header);
         
-        p.innerHTML = "Du behövde " + 5 + " försök för att klara quizen.";
-        content.appendChild(p);
+        for (var i = 1; i < Quiz.results.length; i++) {
+            p.innerHTML = p.innerHTML + "Fråga " + i + ": " + Quiz.results[i] + " fel.";
+            content.appendChild(p);
+        }
     }
     
 };
