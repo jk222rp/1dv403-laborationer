@@ -152,7 +152,6 @@ var Quiz = {
         var content = document.getElementById("content");
         var header = document.createElement("h2");
         var header2 = document.createElement("h3");
-        var p = document.createElement("p");
         
     // Rensar contenten på eventuella tidigare frågor
         content.innerHTML = "";
@@ -163,10 +162,12 @@ var Quiz = {
         
     // Skriver ut resultatet
         header2.innerHTML = "Resultat";
-        content.appendChild(header);
+        content.appendChild(header2);
         
         for (var i = 1; i < Quiz.results.length; i++) {
-            p.innerHTML = p.innerHTML + "Fråga " + i + ": " + Quiz.results[i] + " fel.";
+            var p = document.createElement("p");
+            p.setAttribute("class", "result");
+            p.innerHTML = "Fråga " + i + ": " + Quiz.results[i] + " fel.";
             content.appendChild(p);
         }
     }
