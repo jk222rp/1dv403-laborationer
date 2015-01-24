@@ -6,11 +6,11 @@ var Quiz = {
     results : [],
     
     init: function() {
-        Quiz.startQuiz();
+        Quiz.startQuiz(Quiz.publishQuestion);
     },
 
 // Hämtar information om en fråga och returnerar detta som ett objekt
-    startQuiz: function() {
+    startQuiz: function(callback) {
         var question = {};
         var xhr = new XMLHttpRequest();
         
@@ -19,7 +19,7 @@ var Quiz = {
                 question = JSON.parse(xhr.responseText);
                 
             // Publicerar frågan på webbsidan
-                Quiz.publishQuestion(question);
+                callback(question);
             }
         };
         
