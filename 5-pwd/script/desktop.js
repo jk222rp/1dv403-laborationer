@@ -159,7 +159,17 @@ var Desktop = {
             
         //Skapar en länk och lägger in i fönstrets content
             thumbLink.setAttribute("href", "#");
+            thumbLink.onclick = desktopImages(i);
             winContent.appendChild(thumbLink);
+        }
+        
+    //För att i i images[i] inte ska få värdet images.length + 1
+    //utan värdet i i images[i] faktiskt har då funktionen skapas
+        function desktopImages(j) {
+            return function() {
+                Desktop.changeDesktopImage(images[j].URL);
+                return false;
+            };
         }
     },
     
@@ -188,6 +198,13 @@ var Desktop = {
         size[1] = height;
         
         return size;
+    },
+    
+//Ändrar skrivbordsbilden
+    changeDesktopImage: function(imgURL) {
+        var container = document.getElementById("container");
+        
+        container.style.backgroundImage = "url(" + imgURL + ")";
     }
 };
 
