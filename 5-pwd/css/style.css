@@ -49,7 +49,7 @@ table {
 
 /*END OF RESET*/
 
-/*COLORS
+/*COLORS------------------------------------------------------------------------
     Background: #747 (purple)
     #AD8FAD (light purple)
     Header text: #000 (black)
@@ -72,6 +72,7 @@ body {
     width: calc(100% - 20px);
 }
 
+/*HEADER START----------------------------------------------------------------*/
 #header {
     height: 60px;
     margin: 0 10px;
@@ -86,7 +87,9 @@ h1 {
     text-align: center;
     text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
 }
+/*HEADER END------------------------------------------------------------------*/
 
+/*SIDEBAR START---------------------------------------------------------------*/
 #sidebar {
     background-color: #fff;
     border: 2px solid #402440;
@@ -111,7 +114,9 @@ a .sidebarimg {
     border-radius: 3px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
+/*SIDEBAR END-----------------------------------------------------------------*/
 
+/*WINDOW START----------------------------------------------------------------*/
 #window {
     background-color: #fff;
     border: 2px solid #402440;
@@ -127,6 +132,7 @@ a .sidebarimg {
     width: calc(100% - 210px);
 }
 
+/*Window header START---------------------------------------------------------*/
 #windowHeader {
     background: linear-gradient(#AD8FAD ,#402440);
     border-top-left-radius: 3px;
@@ -166,7 +172,9 @@ a .sidebarimg {
 #closeImg {
     width: 10px;
 }
+/*Window header END-----------------------------------------------------------*/
 
+/*Window content START--------------------------------------------------------*/
 #windowContent {
     display: flex;
     flex-flow: row wrap;
@@ -195,7 +203,9 @@ a .sidebarimg {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+/*Window content END----------------------------------------------------------*/
 
+/*Window footer START---------------------------------------------------------*/
 #windowFooter {
     background: #402440;
     border-bottom-left-radius: 2px;
@@ -207,13 +217,32 @@ a .sidebarimg {
     width: 100%;
 }
 
-p {
+#windowFooter img {
+    float: left;
+    margin-left: 5px;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.loadText {
+    color: black;
+    float: left;
+    font-family: verdana, arial, sans-serif;
+    font-size: 0.8em;
+    line-height: 20px;
+    margin-left: 25px;
+    text-align: left;
+}
+
+.readyText {
     color: black;
     font-family: verdana, arial, sans-serif;
     font-size: 0.8em;
-    font-weight: bold;
-    line-height: 1.4em;
-    margin: 10px 10px;
+    line-height: 20px;
+    margin-left: 5px;
     text-align: left;
 }
+/*Window footer END-----------------------------------------------------------*/
+/*WINDOW END------------------------------------------------------------------*/
 

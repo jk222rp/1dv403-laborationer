@@ -9,7 +9,9 @@ var Desktop = {
     ImageViewer: function() {
         var openImageViewer = document.getElementById("openImageViewer");
         
+    //Sätter onclick-event på ikonen för ImageViewer
         openImageViewer.onclick = function() {
+        //Skapar ett fönster på skrivbordet
             Desktop.openWindow();
             return false;
         };
@@ -69,19 +71,26 @@ var Desktop = {
         container.appendChild(win);
         
     //Hämtar bilderna
-        Desktop.getPictures();
+        Desktop.getImages();
     },
     
 //Hämtar bilderna
-    getPictures: function() {
-        var pictures = [];
+    getImages: function() {
+        var images = [];
         var xhr = new XMLHttpRequest();
+        
+    //Anropar funktionen för att skapa laddarikon + text
+        Desktop.loading();
         
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                pictures = JSON.parse(xhr.responseText);
+                images = JSON.parse(xhr.responseText);
                 
-                Desktop.addPictures(pictures);
+            //Lägger till bilderna i fönstret
+                Desktop.addImages(images);
+            
+            //Anropar funktionen för att ta bort laddarikon + text
+                Desktop.stopLoading();
             }
         };
         
@@ -90,53 +99,88 @@ var Desktop = {
         xhr.send(null);
     },
     
+//Skapar laddarikon + text
+    loading: function() {
+        var loadImg = document.createElement("img");
+        var loadText = document.createElement("p");
+        var winFoot = document.getElementById("windowFooter");
+        
+    //Lägger till laddarikon till fönstrets footer
+        loadImg.src = "script/pics/ajax-loader.gif";
+        winFoot.appendChild(loadImg);
+        
+    //Lägger till "Laddar..."-text till fönstrets footer
+        loadText.setAttribute("class", "loadText");
+        loadText.innerHTML = "Laddar...";
+        winFoot.appendChild(loadText);
+    },
+    
+//Tar bort laddarikon + text och skriver ut Klar! som text
+    stopLoading: function() {
+        var readyText = document.createElement("p");
+        var winFoot = document.getElementById("windowFooter");
+        
+    //Tar bort laddarikon + text
+        winFoot.innerHTML = "";
+        
+    //Lägger till "Klar!"-text till fönstrets footer
+        readyText.setAttribute("class", "readyText");
+        readyText.innerHTML = "Klar!";
+        winFoot.appendChild(readyText);
+    },
+    
 //Lägger till bilderna
-    addPictures: function(pictures) {
+    addImages: function(images) {
         var size = [];
         var winContent = document.getElementById("windowContent");
         
     //Tar fram högsta höjd och bredd av tumnagelbilderna
-        size = Desktop.getSize(pictures);
+        size = Desktop.getSize(images);
     
-        for (var i = 0; i < pictures.length; i++) {
+    //Lägger till bilderna i boxar i länkar för varje bild som finns
+        for (var i = 0; i < images.length; i++) {
             var thumbBox = document.createElement("div");
             var thumbImg = document.createElement("img");
             var thumbLink = document.createElement("a");
             
-            thumbImg.src = pictures[i].thumbURL;
+        //Skapar en bild och lägger in i en box
+            thumbImg.src = images[i].thumbURL;
             thumbImg.setAttribute("class", "images");
             thumbBox.appendChild(thumbImg);
         
-        //Sätter bredd och höjd på tumnagelboxarna till de högsta värdena bland de laddade bilderna
+        //Sätter bredd och höjd på tumnagelboxarna
+        //till de högsta värdena bland de laddade bilderna
             thumbBox.style.width = size[0].toString() + "px";
             thumbBox.style.height = size[1].toString() + "px";
-            
+        
+        //Skapar en box och lägger in i en länk
             thumbBox.setAttribute("class", "thumbBox");
             thumbLink.appendChild(thumbBox);
             
+        //Skapar en länk och lägger in i fönstrets content
             thumbLink.setAttribute("href", "#");
             winContent.appendChild(thumbLink);
         }
     },
     
 //Tar fram högsta höjd och bredd av tumnagelbilderna
-    getSize: function(pictures) {
+    getSize: function(images) {
         var width = 0;
         var height = 0;
         var size = [];
         
     //Går igenom varje bild
-        for (var i = 0; i < pictures.length; i++) {
+        for (var i = 0; i < images.length; i++) {
         //Om bildens bredd är större än tidigare lagrat värde på bredd
         //ändras det lagrade värdet till bildens bredd
-            if (pictures[i].thumbWidth > width) {
-                width = pictures[i].thumbWidth;
+            if (images[i].thumbWidth > width) {
+                width = images[i].thumbWidth;
             }
             
         //Om bildens höjd är större än tidigare lagrat värde på höjd
         //ändras det lagrade värdet till bildens höjd
-            if (pictures[i].thumbHeight > height) {
-                height = pictures[i].thumbHeight;
+            if (images[i].thumbHeight > height) {
+                height = images[i].thumbHeight;
             }
         }
         
